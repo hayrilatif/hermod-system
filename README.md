@@ -1,4 +1,4 @@
 # hermod-system
-Bifröst -> UI Module
-Polaris -> Vehicle Computer
-Pulse -> RT Computer
+Bifröst -> UI Module \n
+Polaris -> Vehicle Computer \n
+Pulse -> RT Computer \n
