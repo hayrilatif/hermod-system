@@ -39,15 +39,19 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 
 add_executable( pulse main.c 
-                src/cores/core0.c
-                src/cores/core1.c  
-                src/shared_data.c 
-                src/sensors/dht11.c
-                src/sensors/optics.c
                 src/actuators/brakes.c
                 src/actuators/inverter_rs485.c
                 src/actuators/vesc6.c
-                src/shared_data.c)
+
+                src/cores/core0.c
+                src/cores/core1.c  
+
+                src/sensors/dht11.c
+                src/sensors/mpu9250.c
+                src/sensors/optics.c
+
+                src/communication.c
+                src/shared_data.c )
 
 pico_set_program_name(pulse "pulse")
 pico_set_program_version(pulse "0.1")

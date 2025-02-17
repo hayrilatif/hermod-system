@@ -16,7 +16,7 @@ void core1_entry()
 
     // 1000ms de bir optik verisi guncellenir (sicaklik, nem)
     if (!add_repeating_timer_ms(1000, dht11_htimer_callback, NULL, &dht11_timer)) {
-        printf("Failed to add dht11 repeating timer\n");
+        //Failed to add dht11 repeating timer\n;
         return core1_entry();
     }
 

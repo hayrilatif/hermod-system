@@ -5,10 +5,8 @@
 #include "../default_pins.h"
 #include "hardware/pwm.h"
 
-extern volatile uint slice1, slice2, slice3, slice4;
-extern volatile uint chan1, chan2, chan3, chan4;
-
-void vesc6_configure();
-void set_motor_duty_cycle(uint slice, uint channel, uint16_t level);
+void vesc6_configure(); //connect pico <-> vesc 6
+uint8_t calculate_checksum(uint8_t *data, int len);
+void set_motor_rpm(int rpm);
 
 #endif

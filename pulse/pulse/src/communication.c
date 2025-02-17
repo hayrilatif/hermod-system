@@ -1,6 +1,6 @@
-#include "../../include/communication.h"
-#include "../../include/default_pins.h"
-#include "../../include/shared_data.h"
+#include "../include/communication.h"
+#include "../include/default_pins.h"
+#include "../include/shared_data.h"
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
 #include "hardware/dma.h"
@@ -35,9 +35,10 @@ void safe_uart_transfer(mutex_t *mutex, const void *array, size_t element_size) 
 
 bool general_comm_transfer_htimer_callback(struct repeating_timer *t)
 {
-    safe_uart_transfer(&dht11_mutex, &dht11_sensor_buffer, sizeof(dht11_sensor_data_t));
-    safe_uart_transfer(&mpu9250_mutex, &mpu9250_sensor_buffer, sizeof(mpu9250_sensor_data_t));
-    safe_uart_transfer(&optics_mutex, &optics_sensor_buffer, sizeof(optics_sensor_data_t));
+    //volatile func kullan//////////////////////
+    safe_uart_transfer(&dht11_mutex, (const void*)&dht11_sensor_buffer, sizeof(dht11_sensor_data_t));
+    safe_uart_transfer(&mpu9250_mutex, (const void*)&mpu9250_sensor_buffer, sizeof(mpu9250_sensor_data_t));
+    safe_uart_transfer(&optics_mutex, (const void*)&optics_sensor_buffer, sizeof(optics_sensor_data_t));
 
     return true; //timer tekrar tekrar calisir (true)
 }

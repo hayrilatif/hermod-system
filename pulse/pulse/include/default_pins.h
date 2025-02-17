@@ -32,6 +32,10 @@
 #define RS485_TX_PIN 0
 #define RS485_RX_PIN 1
 
+// vesc6 tx ve rx
+#define VESC6_TX_PIN 8
+#define VESC6_RX_PIN 9
+
 // rs485de pini transceiver kontrolu icin
 // bu pini, rs485 de veya re girisine baglaacaz. okuma mi yazma mi yaptigimizi soyluyor hgh=yazma, low=okuma
 #define RS485_DE_PIN 2
