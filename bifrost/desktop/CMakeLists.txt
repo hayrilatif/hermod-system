@@ -37,8 +37,10 @@ QML_FILES
 QML_FILES ui/views/NavigationMediator.qml
 QML_FILES ui/pages/ManuelControlPage.qml
 QML_FILES ui/pages/HermodPulsePage.qml
-SOURCES include/connection_manager.h
-SOURCES src/connection_manager.cpp
+SOURCES include/udp_listener.h
+SOURCES src/udp_listener.cpp
+SOURCES include/tcp_client.h
+SOURCES src/tcp_client.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

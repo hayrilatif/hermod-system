@@ -5,6 +5,7 @@
 #include <string>
 #include <cstring>
 #include <unistd.h>
+#include <queue>
 #include <arpa/inet.h>
 
 class TCPServer {
@@ -23,9 +24,17 @@ public:
     
     void closeServer();
     
+    void pingPongLoop();
+
+    void enqueueMessage(const std::string& message);
+
 private:
     int port;
     int server_fd, client_fd;
+
+    int pingPongWaitMS = 100; //ping pong sinyal bekleme süresi.
+
+    std::queue<std::string> messageQueue;
 };
 
 #endif

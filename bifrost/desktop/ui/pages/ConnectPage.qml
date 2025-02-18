@@ -9,7 +9,7 @@ Item {
     property var mediator
 
     Component.onCompleted: {
-        connectionManager.startListeningUdp(12321);  // c++ tan fonksiyon cagrisi
+        UDPListener.startListening();  // c++ tan fonksiyon cagrisi
     }
 
     

@@ -15,7 +15,6 @@ ApplicationWindow {
 
 
     NavigationMediator { id: navMediator }
-    property bool isConnected: connectionManager.isConnected 
 
     Rectangle {
         id: background

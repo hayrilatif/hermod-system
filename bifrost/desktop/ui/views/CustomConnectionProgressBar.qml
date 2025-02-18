@@ -4,7 +4,7 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 2.15
 
 Item {
-    property bool isConnected: connectionManager.isConnected
+    property bool isConnected: TCPClient.isConnected
 
     Rectangle {
         id: container
