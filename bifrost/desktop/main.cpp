@@ -5,22 +5,13 @@
 #include "include/tcp_client.h"
 #include <string>
 #include <iostream>
-using namespace std;
+#include "yonerge.h"
 
-class Yonerge {
-public :
-string dosyayolu;
-
-Yonerge(string yol) : dosyaYolu(yol) {}
-void dosya_bilgisi() {
-cout << "Secilen yonerge dosyasi:" << dosyayolu << endl;
-}
-};
 int main(int argc, char *argv[])
 {
-    string dosyayolu;
-    cout << "Lutfen yonerge dosyasinin yolunu girin";
-    getline (cin,dosyayolu);
+    std::string dosyayolu;
+    std::cout << "Lutfen yonerge dosyasinin yolunu girin";
+    std::getline (cin,dosyayolu);
     Yonerge yonerge (dosyayolu);
     yonerge.dosya_bilgisi();
     
