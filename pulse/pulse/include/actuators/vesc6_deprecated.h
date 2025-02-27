@@ -1,5 +1,5 @@
-#ifndef VESC6_H
-#define VESC6_H
+#ifndef VESC6_H_
+#define VESC6_H_
 #include "pico/stdlib.h"
 #include "stdio.h"
 #include "../default_pins.h"

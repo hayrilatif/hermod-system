@@ -1,3 +1,5 @@
+//Tum pinler buradan ayarlanabilir !!
+
 #ifndef DEFAULT_PINS_H
 #define DEFAULT_PINS_H
 

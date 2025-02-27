@@ -1,3 +1,5 @@
+//bu sensor kullanilmayacak zaten burasi onemli degil
+
 #ifndef DHT11_H
 #define DHT11_H
 

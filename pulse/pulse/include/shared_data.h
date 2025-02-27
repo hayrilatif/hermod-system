@@ -1,3 +1,5 @@
+//okunan tum sensor verileri shared data da tutulur. 
+
 #ifndef SHARED_DATA_H
 #define SHARED_DATA_H
 
@@ -6,9 +8,10 @@
 #include "sensors/optics.h"
 #include "pico/mutex.h"
 
+//sensor verileri kac zaman adimina kadar tutulacak. Zaman adimlarinin gercek periyotlari sensorlere gore degisebilir.
 #define BUFFER_SIZE 16
 
-//isi nem sensoru icin
+//isi nem sensoru icin -- kullanilmayacak bu sensor
 extern mutex_t dht11_mutex;
 extern volatile dht11_sensor_data_t dht11_sensor_buffer[BUFFER_SIZE];  //ring buffer, 16 * 40 = 720ms tutuyor
 
@@ -21,9 +24,10 @@ extern mutex_t optics_mutex;
 extern volatile optics_sensor_data_t optics_sensor_buffer[BUFFER_SIZE];
 
 
+//index arttirmak icin utility
 void increase_index(int * last_index);
 
-//tum veriler icin kullanilabilir
+//tum veriler icin kullanilabilir, verileri gunceller
 void safe_update_element(mutex_t *mutex, void *array, size_t index, const void *value, size_t element_size);
 void safe_get_element(mutex_t *mutex, const void *array, size_t index, void *destination, size_t element_size);
 
