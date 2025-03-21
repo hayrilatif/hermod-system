@@ -2,7 +2,7 @@
 #include "../../include/default_pins.h"
 #include "../../include/shared_data.h"
 #include "hardware/i2c.h"
-#include "harware/dma.h"
+#include "hardware/dma.h"
 
 #define DMA_CHANNEL 10
 #define MPU9250_ADDRESS 0x68
@@ -79,7 +79,7 @@ gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
 
 setup_dma();
 while(1){
-    read_mpu_dma();
+    read_mpu9250();
     sleep_ms(40); // 40 ms bekleme süresi
     process_mpu_data(&sensor_data);
 }
