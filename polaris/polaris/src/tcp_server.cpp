@@ -2,6 +2,7 @@ import socket
 import threading
 import time
 from queue import Queue
+import json 
 
 class TCPServer:
     def __init__(self, port):
@@ -36,12 +37,12 @@ class TCPServer:
         try:
             data = self.client_socket.recv(1024)
             if not data:
-                print("Bağlantı istemci tarafından sonlandırıldı.")
+                print("Baglanti istemci tarafindan sonlandirildi.")
                 self.client_socket.close()
                 return "<|closed|>"
             return data.decode()
         except Exception as e:
-            print(f"Ağ problemi! {e}")
+            print(f"Ag problemi! {e}")
             self.client_socket.close()
             return "<|error|>"
 
@@ -49,7 +50,7 @@ class TCPServer:
         try:
             self.client_socket.sendall(data.encode())
         except Exception as e:
-            print(f"Gönderim hatası: {e}")
+            print(f"Gonderim hatasi: {e}")
 
     def close_server(self):
         if self.client_socket:
@@ -69,7 +70,17 @@ class TCPServer:
                 print(received)
                 break
 
-            print(received)
+             try:
+            data_json = json.loads(received)
+            command = data_json["command"]
+            value = data_json["value"]
+            print("Komut:", command, "| Deger:", value)
+
+            # .... pulse'a mesaj gidecek
+
+        except json.JSONDecodeError:
+            print("Gecersiz JSON:", received)
+            continue
 
     def enqueue_message(self, message):
         self.message_queue.put(message)
