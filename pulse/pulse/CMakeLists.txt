@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 3.13)
 
+set(PICO_TINYUSB_DEVICE 1)
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -30,7 +32,9 @@ set(PICO_PLATFORM rp2040 CACHE STRING "Pico platform")
 include(pico_sdk_import.cmake)
 include(${PICO_SDK_INIT_CMAKE_FILE})
 
+
 project(pulse C CXX ASM)
+
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
@@ -42,23 +46,45 @@ add_executable( pulse main.c
                 src/actuators/brakes.c
                 src/actuators/inverter_rs485.c
                 src/actuators/vesc6.c
+                src/actuators/blinker.c
+                src/actuators/power_cut.c
 
-                src/cores/core0.c
+                #src/cores/core0.c
                 src/cores/core1.c  
 
-                src/sensors/dht11.c
                 src/sensors/mpu9250.c
-                src/sensors/optics.c
+                #src/sensors/optics.c
+                src/sensors/encoder.c
+                src/sensors/navigation.c
+                src/sensors/ninebot.c
 
-                src/communication.c
-                src/shared_data.c )
+                # src/communication.c
+                src/control/communication.c
+                src/control/control.c
+                src/shared_data.c
+                src/control/ring_buffer.c
+                src/control/usb_comm.c
+                src/control/commands.c )
+
+target_compile_definitions(pulse PRIVATE
+        PICO_STDIO_USB=0
+        CFG_TUSB_MCU=OPT_MCU_RP2040
+        CFG_TUSB_RHPORT0_MODE=OPT_MODE_DEVICE
+        CFG_TUD_CDC=1
+        CFG_TUD_CDC_RX_BUFSIZE=256
+        CFG_TUD_CDC_TX_BUFSIZE=256
+)
 
 pico_set_program_name(pulse "pulse")
 pico_set_program_version(pulse "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
+
+pico_enable_stdio_usb(pulse 1)
 pico_enable_stdio_uart(pulse 0)
-pico_enable_stdio_usb(pulse 0)
+
+pico_generate_pio_header(pulse ${CMAKE_CURRENT_LIST_DIR}/src/assembly/encoder_read.pio)
+
 
 # Add the standard library to the build
 target_link_libraries(pulse
@@ -82,8 +108,11 @@ target_link_libraries(pulse
         hardware_adc
         hardware_sync
         hardware_pwm
+        hardware_pio
+        hardware_irq
         
         )
 
-pico_add_extra_outputs(pulse)
 
+
+pico_add_extra_outputs(pulse)

@@ -8,9 +8,10 @@
 
 typedef struct {
     uint32_t timestamp;   // okuma zaman adimi  us
-    float intensity0;
-    float intensity1;
+    bool transition_state;
 } optics_sensor_data_t;
+
+void pio_interrupt_handler();
 
 
 

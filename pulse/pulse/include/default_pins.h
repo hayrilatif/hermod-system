@@ -12,6 +12,7 @@
 
 #define OPTICS_0_PIN 26
 #define OPTICS_1_PIN 27
+#define OPTICS_INTERRUPT_IRQ 0
 
 
 
@@ -22,6 +23,9 @@
 #define BRAKE_1_DIGITAL 11
 #define BRAKE_2_DIGITAL 12
 #define BRAKE_3_DIGITAL 13
+
+#define BLINKER_DIGITAL 14
+#define POWER_CUT_RELAY_DIGITAL 15
 
 //inverter with rs485
 #define UART_ID uart0

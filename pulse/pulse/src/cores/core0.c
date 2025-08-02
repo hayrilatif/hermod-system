@@ -8,23 +8,31 @@
 
 #include "../../include/sensors/optics.h"
 
+#include "../../include/control/communication.h"
+#include "../../include/control/control.h"
+#include "tusb.h"
+#include "hardware/structs/scb.h"
 
 void core0_entry()
 {
-    struct repeating_timer optics_timer; //optik timer okuma icin degil snapshot icin kullanilir, okuma dma uzerinden yurutulutur
 
-    // 500us de bir optik verisi guncellenir
-    if (!add_repeating_timer_us(500, optics_htimer_callback, NULL, &optics_timer)) {
-        return core0_entry();
-    }
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 
-    //buraya +yonerge yurutme sistemi timer gelecek
 
-    // interruptlar engellenmez
+    //printf("Pico USB Serial Initialized!\n");
+
+    bool hey = false;
+
     while (true) {
-        tight_loop_contents();
+        buffer_clear();
+        int size = read_protocol_data();  // veriyi oku ve boyutunuu al
+        
+        if (size > 0) {
+            write_protocol_data(usb_buffer, size);
+
+            hey=!hey;
+            gpio_put(PICO_DEFAULT_LED_PIN, hey);
+        }
     }
 }
-
-
-

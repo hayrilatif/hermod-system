@@ -4,19 +4,19 @@
 #include "string.h"
 
 
-mutex_t dht11_mutex;
-volatile dht11_sensor_data_t dht11_sensor_buffer[16] = {0};
-
 mutex_t mpu9250_mutex;
-volatile mpu9250_sensor_data_t mpu9250_sensor_buffer[16] = {0};
+volatile mpu9250_sensor_data_t mpu9250_sensor_buffer[BUFFER_SIZE] = {0};
 
 mutex_t optics_mutex;
-volatile optics_sensor_data_t optics_sensor_buffer[16] = {0};
+volatile optics_sensor_data_t optics_sensor_buffer[BUFFER_SIZE] = {0};
+
+mutex_t navigation_mutex;
+volatile navigation_state_t navigation_buffer[BUFFER_SIZE] = {0};
 
 
 void increase_index(int * last_index)
 {
-    ((*last_index) + 1) % 16;
+    *last_index = ((*last_index) + 1) % BUFFER_SIZE;
 }
 
 /**
@@ -70,11 +70,11 @@ void buffer_shift_and_update(mutex_t *mutex, void *array, const void *new_value,
 }
 
 // bufferdan en guncel veriyi okur
-void buffer_safe_get_latest(mutex_t *mutex, const void *array, void *destination, size_t element_size) {
+void buffer_safe_get_latest(mutex_t *mutex, const volatile void *array, void *destination, size_t element_size) {
     mutex_enter_blocking(mutex);
 
     // buffer_size-1
-    memcpy(destination, (const uint8_t *)array + (BUFFER_SIZE - 1) * element_size, element_size);
+    memcpy(destination, (const void*)(const volatile  uint8_t *)array + (BUFFER_SIZE - 1) * element_size, element_size);
 
     mutex_exit(mutex);
 }
